@@ -11,6 +11,11 @@ const queries = {
     ORDER BY total_capturas DESC
     LIMIT 10;
     `,
+    filtroSize: `SELECT tramo, talla_media, ninfa1, seca1, rio
+    FROM myData
+    ORDER BY capturas_rs DESC
+    LIMIT 2;
+    `,
     
 }
 

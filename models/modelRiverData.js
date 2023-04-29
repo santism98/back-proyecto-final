@@ -13,7 +13,9 @@ const pool = new Pool({
 const getTodo = async () => {
     let client, result;
     try {
+
         client = await pool.connect();
+        
         const data = await client.query(queries.mostrarTodo)
         result = data.rows
     } catch (error) {
@@ -37,9 +39,42 @@ const getXrio= async ()=>{
 
 }
 
+const getXprops = async ()=>{
+    let client, result;
+    try {
+
+        client = await pool.connect();
+        
+        const data = await client.query(queries.mostrarTodo)
+        result = data.rows
+    } catch (error) {
+        console.log(error)
+        throw error
+    } finally { client.release() }
+    return result
+}
+
+
+const getXsize = async ()=>{
+    let client, result;
+    try {
+
+        client = await pool.connect();
+        
+        const data = await client.query(queries.filtroSize)
+        console.log('estamos en filtrosize')
+        result = data.rows
+    } catch (error) {
+        console.log(error)
+        throw error
+    } finally { client.release() }
+    return result 
+    }
 
 
 
 
 
-module.exports = { getTodo, getXrio}
+
+
+module.exports = { getTodo, getXrio, getXprops, getXsize}
