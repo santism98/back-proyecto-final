@@ -59,7 +59,6 @@ INSERT INTO myData (
     bajo_ninfa,
     bajo_seca,
     ninfa1,
-    c,
     ninfa2,
     ninfa3,
     seca1,

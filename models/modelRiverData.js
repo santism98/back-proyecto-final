@@ -20,14 +20,16 @@ const getTodo = async () => {
         console.log(error)
         throw error
     } finally { client.release() }
+    console.log(result)
     return result
 }
 
-const getXrio= async ()=>{
+const getXrio= async (rio)=>{
     let client, result;
     try {
         client = await pool.connect();
-        const data = await client.query(queries.filtroRio)
+        console.log(rio)
+        const data = await client.query(queries.filtroRio, [rio])
         result = data.rows
     } catch (error) {
         console.log(error)
@@ -35,6 +37,39 @@ const getXrio= async ()=>{
     } finally { client.release() }
     return result
 
+
+}
+
+
+const getXSize= async ()=>{
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(queries.filtroSize)
+        result = data.rows
+    } catch (error) {
+        console.log(error)
+        throw error
+    } finally { client.release() }
+    return result
+
+
+}
+
+
+const getXprovincia= async (provincia)=>{
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(queries.filtroProvincia, [provincia])
+        result = data.rows
+    } catch (error) {
+        console.log(error)
+        throw error
+    } finally { client.release() }
+    return result
+
+
 }
 
 
@@ -42,4 +77,4 @@ const getXrio= async ()=>{
 
 
 
-module.exports = { getTodo, getXrio}
+module.exports = { getTodo, getXrio, getXSize, getXprovincia}

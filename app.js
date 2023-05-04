@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require('cors')
-const {conexion}=require('./helpers/dbConnect')
+//const {conexion}=require('./helpers/dbConnect')
 require('dotenv').config()
 //configurar servidor
 
@@ -31,14 +31,14 @@ app.use(express.json())
 
 //conexion 
 
-conexion()
+//conexion()
 
 
 //rutas
 
 
 app.use('/', require('./routers/routerRiverData'));
-
+app.use('/user', require('./routers/routerUser'))
 
 
 //listener
