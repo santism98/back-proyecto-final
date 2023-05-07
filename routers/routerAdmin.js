@@ -1,13 +1,24 @@
+
+/**
+ * Módulo para las rutas del panel de administración.
+ * @module routes/adminRoutes
+ */
+
 const express = require('express');
-const router = express.Router()
+const router = express.Router();
 
-const {}= require('../controllers/adminControllers');
+const { obtenerTodosLosDatos } = require('../controllers/adminControllers');
 
-router.get('/admin', ) //obtener todos los datos (provisional)
-
-
-
-
-
+/**
+ * Obtiene todos los datos de la base de datos (provisional).
+ *
+ * @name get/admin
+ * @function
+ * @memberof module:routes/adminRoutes
+ * @param {Object} req - Objeto de solicitud Express.
+ * @param {Object} res - Objeto de respuesta Express.
+ * @returns {Promise<void>} No devuelve nada, simplemente envía la respuesta HTTP.
+ */
+router.get('/admin', obtenerTodosLosDatos);
 
 module.exports = router;

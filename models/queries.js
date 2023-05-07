@@ -1,3 +1,23 @@
+/**
+
+Objeto que contiene las consultas SQL utilizadas en la aplicación.
+@typedef {Object} Queries
+@property {string} mostrarTodo Consulta para obtener todos los registros de la tabla mydata.
+@property {string} filtroRio Consulta para filtrar registros por río.
+@property {string} filtroSize Consulta para filtrar registros por talla máxima.
+@property {string} filtroProvincia Consulta para filtrar registros por provincia.
+@property {string} filtroFecha Consulta para obtener registros del mes actual.
+@property {string} agregarDatos Consulta para agregar un nuevo registro a la tabla mydata.
+@property {string} eliminarDatos Consulta para eliminar un registro de la tabla mydata.
+@property {string} actualizarDatos Consulta para actualizar un registro de la tabla mydata.
+*/
+/**
+
+Objeto que contiene las consultas SQL utilizadas en la aplicación.
+
+@type {Queries}
+*/
+
 
 
 const queries = {
@@ -23,12 +43,19 @@ const queries = {
     WHERE provincia = $1 
     ORDER BY capturas_rs DESC
     LIMIT 20;`,
-    agregarDatos: `INSERT INTO myData (id, provincia, rio,tramo, fecha, capturas_rs, talla_media, ninfa1, seca1) 
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+
+    filtroFecha: `SELECT id, capturas_rs, tramo, talla_media, ninfa1, seca1, rio
+    FROM mydata
+    WHERE extract(month from fecha) = extract(month from now())`,
+    agregarDatos: `INSERT INTO myData (id, provincia, rio,tramo, fecha, capturas_rs, talla_media, ninfa1, seca1, user_email) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
 
     eliminarDatos: 'DELETE FROM myData WHERE id=$1',
-    actualizarDatos: 'UPDATE myData SET tramo = $1, talla_media = $2, ninfa1 = $3, seca1 = $4, rio = $5 WHERE id = $6 RETURNING *'
+
+
+    actualizarDatos: 'UPDATE mydata SET provincia = $1, rio= $2, tramo= $3, fecha= $4, capturas_rs= $5, talla_media= $6, ninfa1= $7, seca1= $8  WHERE id = $9; '
 }
 
 
 module.exports = queries
+

@@ -1,4 +1,4 @@
-const { getTodo, getXrio, getXSize, getXprovincia } = require('../models/modelRiverData');
+const { getTodo, getXrio, getXSize, getXprovincia, getXFecha } = require('../models/modelRiverData');
 
 /**
  * Muestra todos los datos disponibles.
@@ -12,8 +12,7 @@ const mostrarPruebas = async (req, res) => {
   try {
     const respuesta = await getTodo();
     const data = respuesta
-    res.json(data);
-    console.log('Datos obtenidos TODOS:', data);
+   res.json(data);
   } catch (error) {
     console.error('Error en la obtención de datos:', error);
     res.status(500).send('Error en la obtención de datos');
@@ -84,15 +83,22 @@ const mostrarXprovincia = async (req, res) => {
   }
 };
 
+/**
+ * Función asíncrona para mostrar los datos obtenidos para una provincia determinada
+ * @param {Object} req - Objeto de solicitud HTTP
+ * @param {Object} res - Objeto de respuesta HTTP
+ * @returns {Object} - Respuesta JSON con los datos obtenidos para la provincia
+ */
 const mostrarBiggerXrio = async (req, res) => {
 
-  const rio = req.query.rio
-  console.log('esta es la provincia: ', rio)
+  const rio = req.query.rio;
+  console.log('esta es la provincia: ', rio);
+
   try {
     const previus = await getXrio(rio);
-    const respuesta = await getXSize(previus)
-    const data = respuesta
-     res.json(data);
+    const respuesta = await getXSize(previus);
+    const data = respuesta;
+    res.json(data);
     console.log('Datos obtenidos PROVINCIA:', data);
   } catch (error) {
     console.error('Error en la obtención de datos:', error);
@@ -100,13 +106,30 @@ const mostrarBiggerXrio = async (req, res) => {
   }
 };
 
+/**
+ * Función asíncrona para mostrar los datos obtenidos para una fecha determinada
+ * @param {Object} req - Objeto de solicitud HTTP
+ * @param {Object} res - Objeto de respuesta HTTP
+ * @returns {Object} - Respuesta JSON con los datos obtenidos para la fecha
+ */
+const mostrarXfecha = async (req, res) => {
 
-
+  try {
+    const respuesta = await getXFecha();
+    const data = respuesta;
+    res.json(data);
+    console.log('Datos obtenidos PROVINCIA:', data);
+  } catch (error) {
+    console.error('Error en la obtención de datos:', error);
+    res.status(500).send('Error en la obtención de datos');
+  }
+};
 
 module.exports = {
   mostrarPruebas,
   mostrarXrio,
   mostrarMasGrande,
   mostrarXprovincia,
-  mostrarBiggerXrio
+  mostrarBiggerXrio,
+  mostrarXfecha
 };

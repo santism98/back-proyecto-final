@@ -1,48 +1,81 @@
+/**
+ * Express module
+ * @const
+ */
 const express = require("express");
-const cors = require('cors')
-//const {conexion}=require('./helpers/dbConnect')
-require('dotenv').config()
-//configurar servidor
 
-//EXPRESS
-const app = express()
-const port = process.env.PORT ;
+/**
+ * Cross-origin resource sharing module
+ * @const
+ */
+const cors = require('cors');
 
-//CORS
-app.use(cors())
+/**
+ * Loads environment variables from a .env file
+ * @const
+ */
+require('dotenv').config();
 
-// establece la carpeta static
+//CONFIGURATIONS
 
-app.use(express.static(__dirname + "/public"));
-console.log(__dirname + "/public")
+/**
+ * Creates an instance of Express
+ * @type {object}
+ * @const
+ */
+const app = express();
 
-//restablecer template engine
+/**
+ * Port to listen to for incoming requests
+ * @type {number|string}
+ * @const
+ */
+const port = process.env.PORT;
 
-app.set('view engine', 'ejs')
-app.set("views", __dirname + "/views");
+/**
+ * Cross-origin resource sharing middleware
+ */
+app.use(cors());
 
-// parse app
-app.use(express.urlencoded({ extended: false }))
+/**
+ * Parses incoming requests with urlencoded payloads
+ */
+app.use(express.urlencoded({ extended: false }));
 
-// parse json
-app.use(express.json())
+/**
+ * Parses incoming requests with JSON payloads
+ */
+app.use(express.json());
 
+/**
+ * Routers module for river data
+ * @const
+ */
+const routerRiverData = require('./routers/routerRiverData');
 
+/**
+ * Routers module for user data
+ * @const
+ */
+const routerUser = require('./routers/routerUser');
 
-//conexion 
+// ROUTES
 
-//conexion()
+/**
+ * Middleware for handling incoming requests to river data endpoints
+ */
+app.use('/', routerRiverData);
 
+/**
+ * Middleware for handling incoming requests to user data endpoints
+ */
+app.use('/user', routerUser);
 
-//rutas
+// LISTENER
 
-
-app.use('/', require('./routers/routerRiverData'));
-app.use('/user', require('./routers/routerUser'))
-
-
-//listener
+/**
+ * Starts the server and listens on the specified port
+ */
 app.listen(port, () => {
-  console.log(`servidor a la escucha del puerto ${port}`)
-})
-
+  console.log(`Server listening on port ${port}`);
+});
