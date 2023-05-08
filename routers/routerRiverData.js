@@ -12,7 +12,10 @@ mostrarXrio,
 mostrarMasGrande,
 mostrarXprovincia,
 mostrarBiggerXrio,
-mostrarXfecha
+mostrarXfecha,
+
+mostrarXemail,
+mostrarXcoordenadas
 } = require('../controllers/riverDataControllers');
 
 /**
@@ -87,4 +90,8 @@ Ruta para obtener los datos de los ríos por fecha.
 @param {function} next - Función para pasar al siguiente controlador de middleware.
 */
 router.get('/fecha', mostrarXfecha);
+
+router.get('/coord', mostrarXcoordenadas);
+
+router.get('/email', mostrarXemail);
 module.exports = router;

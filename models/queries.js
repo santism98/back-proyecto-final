@@ -21,9 +21,17 @@ Objeto que contiene las consultas SQL utilizadas en la aplicación.
 
 
 const queries = {
-    mostrarTodo: `SELECT id, capturas_rs, tramo, talla_media, ninfa1, seca1, rio
+    mostrarTodo: `SELECT id, provincia, capturas_rs, tramo, talla_media, ninfa1, seca1, rio, fecha
     FROM mydata`,
 
+    mostrarXemail: 'SELECT id, provincia, capturas_rs, tramo, talla_media, ninfa1, seca1, rio, fecha FROM mydata WHERE user_email = $1',
+
+   
+   mostrarCoordenadas: 'SELECT coordenadas, rio, tramo FROM mydata WHERE id = 1;',
+   
+   
+   
+   
     filtroRio: `SELECT id, capturas_rs, tramo, talla_media, ninfa1, seca1, rio
     FROM myData
     WHERE rio = $1
@@ -33,9 +41,9 @@ const queries = {
     `,
     filtroSize: `SELECT id, capturas_rs, tramo, talla_media, ninfa1, seca1, rio
     FROM myData
-    WHERE talla_max IS NOT NULL
+    WHERE talla_media IS NOT NULL
     GROUP BY id, capturas_rs, tramo, talla_media, ninfa1, seca1, rio
-    ORDER BY talla_max DESC
+    ORDER BY talla_media DESC
     LIMIT 10;
     `,
     filtroProvincia: `SELECT id, capturas_rs, tramo, talla_media, ninfa1, seca1, rio
@@ -47,13 +55,23 @@ const queries = {
     filtroFecha: `SELECT id, capturas_rs, tramo, talla_media, ninfa1, seca1, rio
     FROM mydata
     WHERE extract(month from fecha) = extract(month from now())`,
-    agregarDatos: `INSERT INTO myData (id, provincia, rio,tramo, fecha, capturas_rs, talla_media, ninfa1, seca1, user_email) 
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+    
+    
+    agregarDatos: `INSERT INTO mydata ( provincia, rio, tramo, fecha, capturas_rs, talla_media, ninfa1, seca1, user_email) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
 
     eliminarDatos: 'DELETE FROM myData WHERE id=$1',
 
 
-    actualizarDatos: 'UPDATE mydata SET provincia = $1, rio= $2, tramo= $3, fecha= $4, capturas_rs= $5, talla_media= $6, ninfa1= $7, seca1= $8  WHERE id = $9; '
+    actualizarDatos: 'UPDATE mydata SET provincia = $1, rio= $2, tramo= $3, fecha= $4, capturas_rs= $5, talla_media= $6, ninfa1= $7, seca1= $8  WHERE id = $9; ',
+
+
+    mostrarUsuarios: 'select id, email from users',
+
+    eliminarUsuario: 'BEGIN; DELETE FROM users WHERE email = $1; DELETE FROM mydata WHERE user_email = $1; COMMIT;'
+    
+
+
 }
 
 

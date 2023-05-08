@@ -16,10 +16,10 @@ Instancia de conexión a la base de datos.
 @type {Pool}
 */
 const pool = new Pool({
-host: 'localhost',
-user: 'postgres',
-database: 'proyectoFinal',
-password: "admin"
+  connectionString: process.env.DATABASE_URL, // Esto debería ser la URL de tu base de datos en ElephantSQL
+  ssl: {
+    rejectUnauthorized: false // Si estás en desarrollo, puedes desactivar la verificación del certificado SSL
+  }
 });
 /**
 

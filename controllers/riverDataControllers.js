@@ -1,4 +1,4 @@
-const { getTodo, getXrio, getXSize, getXprovincia, getXFecha } = require('../models/modelRiverData');
+const { getTodo, getXrio, getXSize, getXprovincia, getXFecha, getXemail, getCoordenadas } = require('../models/modelRiverData');
 
 /**
  * Muestra todos los datos disponibles.
@@ -125,11 +125,39 @@ const mostrarXfecha = async (req, res) => {
   }
 };
 
+const mostrarXemail = async (req, res) => {
+  const email = req.query.email
+  console.log('esto es email: ', email)
+  try {
+    const respuesta = await getXemail(email);
+    const data = respuesta
+     res.json(data);
+    console.log('Datos obtenidos email:', data);
+  } catch (error) {
+    console.error('Error en la obtención de datos:', error);
+    res.status(500).send('Error en la obtención de datos');
+  }
+};
+
+const mostrarXcoordenadas = async (req, res) => {
+  try {
+    const respuesta = await getCoordenadas();
+    const data = respuesta
+   res.json(data);
+  } catch (error) {
+    console.error('Error en la obtención de datos:', error);
+    res.status(500).send('Error en la obtención de datos');
+  }
+};
+
+
 module.exports = {
+  mostrarXcoordenadas,
   mostrarPruebas,
   mostrarXrio,
   mostrarMasGrande,
   mostrarXprovincia,
   mostrarBiggerXrio,
-  mostrarXfecha
+  mostrarXfecha,
+  mostrarXemail
 };

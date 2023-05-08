@@ -11,19 +11,16 @@ const userModel = require('../models/userModel');
  */
 const agregarDatos = async (req, res) => {
   try {
-    // Obtener el email del usuario a partir del token JWT decodificado
-    const { email } = req.user;
-
     // Obtener los datos del cuerpo de la solicitud
-    const { id, provincia, rio, tramo, fecha, capturas_rs, talla_media, ninfa1, seca1 } = req.body;
+    const { provincia, rio, tramo, fecha, capturas_rs, talla_media, ninfa1, seca1, user_email } = req.body;
 
     // Validar que los datos requeridos estén presentes
-    // if (!tramo || !talla_media || !ninfa1 || !seca1 || !rio || !provincia) {
-    //   return res.status(400).json({ message: 'Faltan campos obligatorios' });
-    // }
+    if (!tramo || !talla_media || !ninfa1 || !seca1 || !rio || !provincia) {
+      return res.status(400).json({ message: 'Faltan campos obligatorios' });
+    }
 
-    // Agregar los datos a la base de datos, incluyendo el email del usuario
-    const result = await userModel.addData({id, provincia, rio, tramo, fecha, capturas_rs, talla_media, ninfa1, seca1, email});
+    // Agregar los datos a la base de datos
+    const result = await userModel.addData(provincia, rio, tramo, fecha, capturas_rs, talla_media, ninfa1, seca1, user_email);
     console.log(result)
 
     // Enviar una respuesta de éxito
@@ -33,6 +30,7 @@ const agregarDatos = async (req, res) => {
     return res.status(500).json({ message: 'Error al agregar los datos', error });
   }
 };
+
 
 /**
  * Actualiza los datos de una captura en la base de datos.
@@ -47,7 +45,9 @@ const actualizarDatos = async (req, res) => {
   try {
     const { provincia, rio, tramo, fecha, capturas_rs, talla_media, ninfa1, seca1 } = req.body;
     const id = req.query.id;
+    
     const resultado = await userModel.updateData({ provincia, rio, tramo, fecha, capturas_rs, talla_media, ninfa1, seca1, id });
+    console.log('esto es actualizar datos: ', resultado)
     res.status(200).json({
       status: 'success',
       data: {
@@ -59,6 +59,7 @@ const actualizarDatos = async (req, res) => {
     res.status(500).json({ message: 'Error al actualizar los datos', error: err });
   }
 };
+
 
 /**
  * Elimina los datos de una captura de la base de datos.
@@ -72,7 +73,9 @@ const actualizarDatos = async (req, res) => {
 
 const eliminarDatos = async (req, res) => {
   try {
+   
     const id = req.query.id;
+    console.log('desde api:', id)
     await userModel.eliminarDatos(id);
     return res.status(200).json({
       ok:true,

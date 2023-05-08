@@ -7,7 +7,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { obtenerTodosLosDatos } = require('../controllers/adminControllers');
+const { deleteUser, mostrarUsuarios } = require('../controllers/adminControllers');
 
 /**
  * Obtiene todos los datos de la base de datos (provisional).
@@ -19,6 +19,7 @@ const { obtenerTodosLosDatos } = require('../controllers/adminControllers');
  * @param {Object} res - Objeto de respuesta Express.
  * @returns {Promise<void>} No devuelve nada, simplemente envía la respuesta HTTP.
  */
-router.get('/admin', obtenerTodosLosDatos);
+router.delete('/delete', deleteUser);
+router.get('/usuarios', mostrarUsuarios);
 
 module.exports = router;

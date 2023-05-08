@@ -2,11 +2,11 @@ const { Pool } = require('pg')
 const queries = require("./queries")
 
 const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    database: 'proyectoFinal',
-    password: "admin"
-})
+    connectionString: process.env.DATABASE_URL, // Esto debería ser la URL de tu base de datos en ElephantSQL
+    ssl: {
+      rejectUnauthorized: false // Si estás en desarrollo, puedes desactivar la verificación del certificado SSL
+    }
+  });
 
 /**
  * Obtiene todas las entradas de la tabla 'todos'.
@@ -26,6 +26,23 @@ const getTodo = async () => {
     console.log(result)
     return result
 }
+
+
+const getXemail = async (email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        console.log(email)
+        const data = await client.query(queries.mostrarXemail, [email])
+        result = data.rows || []; // Si data.rows es falsy, se establece como un array vacío
+    } catch (error) {
+        console.log(error)
+        throw error
+    } finally { client.release() }
+    return result
+}
+
+
 
 
 /**
@@ -109,9 +126,23 @@ const getXFecha= async ()=>{
     return result
     }
 
+    const getCoordenadas= async ()=>{
+        let client, result;
+        try {
+        client = await pool.connect();
+        const data = await client.query(queries.mostrarCoordenadas)
+        result = data.rows
+        } catch (error) {
+        console.log(error)
+        throw error
+        } finally { client.release() }
+        return result
+        }
+    
 
 
 
 
 
-module.exports = { getTodo, getXrio, getXSize, getXprovincia, getXFecha}
+
+module.exports = { getCoordenadas ,getTodo, getXrio, getXSize, getXprovincia, getXFecha, getXemail}

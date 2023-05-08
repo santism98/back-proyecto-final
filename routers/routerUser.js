@@ -43,7 +43,7 @@ router.post('/agregar', agregarDatos);
  * @returns {Promise<void>}
  * @throws {Error} If there is an error updating data.
  */
-router.put('/actualizar/:id', actualizarDatos);
+router.put('/actualizar', actualizarDatos);
 
 /**
  * @function eliminarDatos
@@ -54,6 +54,6 @@ router.put('/actualizar/:id', actualizarDatos);
  * @returns {Promise<void>}
  * @throws {Error} If there is an error deleting data.
  */
-router.delete('/delete/:id', eliminarDatos);
+router.delete('/delete', eliminarDatos);
 
 module.exports = router;

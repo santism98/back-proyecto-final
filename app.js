@@ -1,81 +1,38 @@
-/**
- * Express module
- * @const
- */
 const express = require("express");
+const cors = require('cors')
+//const {conexion}=require('./helpers/dbConnect')
+require('dotenv').config()
+//configurar servidor
 
-/**
- * Cross-origin resource sharing module
- * @const
- */
-const cors = require('cors');
+//EXPRESS
+const app = express()
+const port = process.env.PORT ;
 
-/**
- * Loads environment variables from a .env file
- * @const
- */
-require('dotenv').config();
+//CORS
+app.use(cors())
 
-//CONFIGURATIONS
 
-/**
- * Creates an instance of Express
- * @type {object}
- * @const
- */
-const app = express();
+// parse app
+app.use(express.urlencoded({ extended: false }))
 
-/**
- * Port to listen to for incoming requests
- * @type {number|string}
- * @const
- */
-const port = process.env.PORT;
+// parse json
+app.use(express.json())
 
-/**
- * Cross-origin resource sharing middleware
- */
-app.use(cors());
 
-/**
- * Parses incoming requests with urlencoded payloads
- */
-app.use(express.urlencoded({ extended: false }));
 
-/**
- * Parses incoming requests with JSON payloads
- */
-app.use(express.json());
 
-/**
- * Routers module for river data
- * @const
- */
-const routerRiverData = require('./routers/routerRiverData');
 
-/**
- * Routers module for user data
- * @const
- */
-const routerUser = require('./routers/routerUser');
 
-// ROUTES
+//rutas
 
-/**
- * Middleware for handling incoming requests to river data endpoints
- */
-app.use('/', routerRiverData);
 
-/**
- * Middleware for handling incoming requests to user data endpoints
- */
-app.use('/user', routerUser);
+app.use('/', require('./routers/routerRiverData'));
+app.use('/user', require('./routers/routerUser'))
+app.use('/admin', require('./routers/routerAdmin'));
 
-// LISTENER
 
-/**
- * Starts the server and listens on the specified port
- */
+//listener
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+  console.log(`servidor a la escucha del puerto ${port}`)
+})
+
