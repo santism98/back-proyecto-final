@@ -15,9 +15,7 @@ const { deleteUser, mostrarUsuarios } = require('../controllers/adminControllers
  * @name get/admin
  * @function
  * @memberof module:routes/adminRoutes
- * @param {Object} req - Objeto de solicitud Express.
- * @param {Object} res - Objeto de respuesta Express.
- * @returns {Promise<void>} No devuelve nada, simplemente envía la respuesta HTTP.
+
  */
 router.delete('/delete', deleteUser);
 router.get('/usuarios', mostrarUsuarios);

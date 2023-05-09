@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "keywords": [],
   "author": "",
@@ -23,5 +24,8 @@
     "mongoose": "^7.0.1",
     "pg": "^8.10.0",
     "puppeteer": "^19.7.3"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
   }
 }
